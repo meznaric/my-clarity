@@ -14,8 +14,7 @@ let g:colors_name="my-clarity"
 "
 " The performance impact of this call can be measured in the hundreds of
 " *nanoseconds* and such could be considered "production safe".
-lua package.loaded['lush_theme.my-clarity'] = nil
+" lua package.loaded['lush_theme.my-clarity-2'] = nil
 
 " include our theme file and pass it to lush to apply
-lua require('lush')(require('lush_theme.my-clarity'))
-
+lua require('lush')(require('lush_theme.my-clarity-2')(require('my-clarity').get_config()))
