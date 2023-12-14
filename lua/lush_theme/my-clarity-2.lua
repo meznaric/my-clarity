@@ -47,38 +47,32 @@
 local lush = require("lush")
 local utils = require("lush_theme.utils")
 local hsl = lush.hsluv
+
+-- print(hsl(120, 100, 50).mix(hsl(0, 100, 50), 50))
+
 -- }}}
 -- {{{ Constants
--- month to day map
-local monthToDay = {
-	january = 0,
-	february = 31,
-	march = 59,
-	april = 90,
-	may = 120,
-	june = 151,
-	july = 181,
-	august = 212,
-	september = 243,
-	october = 273,
-	november = 304,
-	december = 334,
-}
--- }}}
 
 local dayOfTheYear = os.date("*t").yday
 
-local themeFunc = function(config)
-	local currentHue = utils.getCurrentHue(dayOfTheYear)
-	if type(config.base_color) == "string" and config.base_color ~= "by_day" then
-		currentHue = utils.getCurrentHue(monthToDay[config.base_color])
+local function get_colors(colors)
+	if colors.color_mode == "fixed" then
+		return colors.base_hue, colors.first_hue, colors.second_hue
+	elseif colors.color_mode == "by_day" then
+		local currentHue = utils.getCurrentHue(colors.day)
+		local accentHue = currentHue + colors.first_offset
+		local commentHue = currentHue + colors.second_offset
+		return currentHue, accentHue, commentHue
+	elseif colors.color_mode == "dynamic" then
+		local currentHue = utils.getCurrentHue(dayOfTheYear)
+		local accentHue = currentHue + colors.first_offset
+		local commentHue = currentHue + colors.second_offset
+		return currentHue, accentHue, commentHue
 	end
-	if type(config.base_color) == "number" then
-		currentHue = utils.getCurrentHue(config.base_color)
-	end
+end
 
-	local accentHue = currentHue + config.accent_offset
-	local commentHue = currentHue + config.second_offset
+local themeFunc = function(config)
+	local currentHue, accentHue, commentHue = get_colors(config.colors)
 
 	return lush(function(injected_functions)
 		local success = hsl(150, 99, 35)
@@ -989,7 +983,7 @@ end
 -- Flip this to true so you can use `:Lushify`
 local __DEV = false
 if __DEV then
-	return themeFunc({ base_color = "by_day", accent_offset = 40, second_offset = 20 })
+	return themeFunc({})
 else
 	return themeFunc
 end

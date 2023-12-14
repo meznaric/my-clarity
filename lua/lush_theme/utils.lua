@@ -1,34 +1,116 @@
+local lush = require("lush")
+local hslUtils = require("lush.vivid.hsluv.lib")
+local hsl = lush.hsluv
+
 local M = {}
 
-local function lerp(x, y, t)
-	return x + (y - x) * t
-end
+-- local function lerp(x, y, t)
+-- 	return x + (y - x) * t
+-- end
 
 local function mapToRange(value, fromMin, fromMax, toMin, toMax)
 	return toMin + (value - fromMin) * (toMax - toMin) / (fromMax - fromMin)
 end
 
+local winterHue = 235
+local springHue = 120
+local summerHue = 60
+local autumnHue = 20
+
+local winterStart = 355
+local winterMid = 21
+local springStart = 76
+local midSpring = 105
+local summerStart = 172
+local midSummer = 198
+local autumnStart = 259
+local midAutumn = 285
+
+local function mix(c1, c2, t)
+	local color1 = hsl(c1, 50, 50)
+	local color2 = hsl(c2, 50, 50)
+	local color1Lch = (hslUtils.hsluv_to_lch({ color1.h, color1.s, color1.l }))
+	local color2Lch = (hslUtils.hsluv_to_lch({ color2.h, color2.s, color2.l }))
+	local l = color1Lch[1] + t * (color2Lch[1] - color1Lch[1])
+	local c = color1Lch[2] + t * (color2Lch[2] - color1Lch[2])
+	local h = color1Lch[3] + t * (color2Lch[3] - color1Lch[3])
+
+	-- Return the interpolated color as a new tuple
+
+	local hue = hslUtils.lch_to_hsluv({ l, c, h })[1]
+	vim.notify("l: " .. l .. " c: " .. c .. " h: " .. h .. " FINAL: " .. hue)
+	return hue
+end
+
+-- Mid season % values:
+-- 21, 47, 72, 97
+-- Returns the hue based on the season we are in
+-- It smoothly interpolates between throughout the year
 M.getCurrentHue = function(day_of_year)
 	-- Define the hue values for each season
-	local winterHue = 210
-	local springHue = 120
-	local summerHue = 55
-	local autumnHue = 20
 
-	-- Map dayOfTheYear to a value between 0 and 365
+	-- Map dayOfTheYear to a value between 0 and 365 to 0 to 100
 	local mappedValue = mapToRange(day_of_year % 365, 1, 365, 0, 1)
 
+	--   return mix(winterHue, springHue, 0.5)
+
 	-- Interpolate between the hues based on the mapped value
+	-- Mixing colors: hsl(winterHue, 50, 50).mix(hsl(springHue, 50, 50), mappedValue / 21).h
 	local currentHue
+
 	if mappedValue < 0.25 then
-		currentHue = lerp(winterHue, springHue, mappedValue / 0.25)
+		currentHue = mix(winterHue, springHue, mappedValue / 0.25)
 	elseif mappedValue < 0.5 then
-		currentHue = lerp(springHue, summerHue, (mappedValue - 0.25) / 0.25)
+		currentHue = mix(springHue, summerHue, (mappedValue - 0.25) / 0.25)
 	elseif mappedValue < 0.75 then
-		currentHue = lerp(summerHue, autumnHue, (mappedValue - 0.5) / 0.25)
+		currentHue = mix(summerHue, autumnHue, (mappedValue - 0.5) / 0.25)
 	else
-		currentHue = lerp(autumnHue, winterHue - 360, (mappedValue - 0.75) / 0.25)
+		currentHue = mix(autumnHue, winterHue - 360, (mappedValue - 0.75) / 0.25)
 	end
+	-- if mappedValue < springStart then
+	-- 	local winterPercent = mapToRange(mappedValue + 360, winterStart, springStart + 360, 0, 100)
+	-- 	print("winterPercent: " .. winterPercent)
+	-- 	if winterPercent < 50 then
+	-- 		currentHue = mix(autumnHue, winterHue, winterPercent * 2)
+	-- 	else
+	-- 		currentHue = mix(winterHue, springHue, (winterPercent - 50) * 2)
+	-- 	end
+	-- elseif mappedValue < summerStart then
+	-- 	local springPercent = mapToRange(mappedValue, springStart, summerStart, 0, 100)
+	-- 	print("springPercent: " .. springPercent)
+	-- 	if springPercent < 50 then
+	-- 		currentHue = mix(springHue, summerHue, springPercent * 2)
+	-- 	else
+	-- 		currentHue = mix(springHue, summerHue, (springPercent - 50) * 2)
+	-- 	end
+	-- elseif mappedValue < autumnStart then
+	-- 	local summerPercent = mapToRange(mappedValue, summerStart, autumnStart, 0, 100)
+	-- 	print("summerPercent: " .. summerPercent)
+	-- 	if summerPercent < 50 then
+	-- 		currentHue = mix(springHue, summerHue, summerPercent * 2)
+	-- 	else
+	-- 		currentHue = mix(summerHue, autumnHue, (summerPercent - 50) * 2)
+	-- 	end
+	-- elseif mappedValue < winterStart then
+	-- 	local autumnPercent = mapToRange(mappedValue, autumnStart, winterStart, 0, 100)
+	-- 	print("autumnPercent: " .. autumnPercent)
+	-- 	if autumnPercent < 50 then
+	-- 		currentHue = mix(summerHue, autumnHue, autumnPercent * 2)
+	-- 	else
+	-- 		currentHue = mix(autumnHue, winterHue, (autumnPercent - 50) * 2)
+	-- 	end
+	-- else
+	-- 	local winterPercent = mapToRange(mappedValue, winterStart, springStart + 360, 0, 100)
+	-- 	print("winterPercent2: " .. winterPercent)
+	-- 	if winterPercent < 50 then
+	-- 		currentHue = mix(autumnHue, winterHue, winterPercent * 2)
+	-- 	else
+	-- 		-- This case should not generally happen, but it's here for brevity
+	-- 		currentHue = mix(winterHue, springHue, (winterPercent - 50) * 2)
+	-- 	end
+	-- end
+
+	print("HUE:" .. currentHue .. "  |  Value: " .. mappedValue)
 
 	return currentHue
 end
