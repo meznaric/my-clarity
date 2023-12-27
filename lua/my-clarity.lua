@@ -82,7 +82,7 @@ M.next_day = function()
 			second_offset = -60,
 		},
 	})
-	print("current_day: " .. current_day)
+	-- print("current_day: " .. current_day)
 	vim.cmd(":IBLDisable")
 	vim.cmd(":IBLEnable")
 end

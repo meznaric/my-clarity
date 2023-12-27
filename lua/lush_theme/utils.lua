@@ -67,51 +67,6 @@ M.getCurrentHue = function(day_of_year)
 	else
 		currentHue = mix(autumnHue, winterHue - 360, (mappedValue - 0.75) / 0.25)
 	end
-	-- if mappedValue < springStart then
-	-- 	local winterPercent = mapToRange(mappedValue + 360, winterStart, springStart + 360, 0, 100)
-	-- 	print("winterPercent: " .. winterPercent)
-	-- 	if winterPercent < 50 then
-	-- 		currentHue = mix(autumnHue, winterHue, winterPercent * 2)
-	-- 	else
-	-- 		currentHue = mix(winterHue, springHue, (winterPercent - 50) * 2)
-	-- 	end
-	-- elseif mappedValue < summerStart then
-	-- 	local springPercent = mapToRange(mappedValue, springStart, summerStart, 0, 100)
-	-- 	print("springPercent: " .. springPercent)
-	-- 	if springPercent < 50 then
-	-- 		currentHue = mix(springHue, summerHue, springPercent * 2)
-	-- 	else
-	-- 		currentHue = mix(springHue, summerHue, (springPercent - 50) * 2)
-	-- 	end
-	-- elseif mappedValue < autumnStart then
-	-- 	local summerPercent = mapToRange(mappedValue, summerStart, autumnStart, 0, 100)
-	-- 	print("summerPercent: " .. summerPercent)
-	-- 	if summerPercent < 50 then
-	-- 		currentHue = mix(springHue, summerHue, summerPercent * 2)
-	-- 	else
-	-- 		currentHue = mix(summerHue, autumnHue, (summerPercent - 50) * 2)
-	-- 	end
-	-- elseif mappedValue < winterStart then
-	-- 	local autumnPercent = mapToRange(mappedValue, autumnStart, winterStart, 0, 100)
-	-- 	print("autumnPercent: " .. autumnPercent)
-	-- 	if autumnPercent < 50 then
-	-- 		currentHue = mix(summerHue, autumnHue, autumnPercent * 2)
-	-- 	else
-	-- 		currentHue = mix(autumnHue, winterHue, (autumnPercent - 50) * 2)
-	-- 	end
-	-- else
-	-- 	local winterPercent = mapToRange(mappedValue, winterStart, springStart + 360, 0, 100)
-	-- 	print("winterPercent2: " .. winterPercent)
-	-- 	if winterPercent < 50 then
-	-- 		currentHue = mix(autumnHue, winterHue, winterPercent * 2)
-	-- 	else
-	-- 		-- This case should not generally happen, but it's here for brevity
-	-- 		currentHue = mix(winterHue, springHue, (winterPercent - 50) * 2)
-	-- 	end
-	-- end
-
-	print("HUE:" .. currentHue .. "  |  Value: " .. mappedValue)
-
 	return currentHue
 end
 

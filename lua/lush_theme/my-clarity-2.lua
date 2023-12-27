@@ -814,16 +814,6 @@ local themeFunc = function(config)
 
 		---
 		--- buftabline
-		-- vim.api.nvim_set_hl(0, "NormalFloat", { fg = "#8f8f8f", bg = "#1e1e1e" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineCurrent", { link = "PmenuSel" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineActive", { fg = "#ffffff", bg = "#252526" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineHidden", { link = "TabLine" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineFill", { link = "TabLineFill" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineModifiedCurrent", { fg = "#D4D4D4", bg = "#466538" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineModifiedActive", { fg = "#D4D4D4", bg = "#466538" })
-		-- vim.api.nvim_set_hl(0, "BufTabLineModifiedHidden", { fg = "#D4D4D4", bg = "#466538" })
-		-- vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#252526", bg = "#252526" })
-		-- vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#202d39" })
     BufTabLineFill { bg = background },
     BufTabLineCurrent { fg = n6.fg, bg = n1.fg},
     BufTabLineModifiedCurrent { fg = n6.fg, bg = a1.fg, gui = 'bold' },
@@ -831,6 +821,7 @@ local themeFunc = function(config)
     BufTabLineModifiedActive { fg = n3.fg, bg = a5.fg, gui = 'bold' },
     BufTabLineHidden { fg = n3.fg , bg = background },
     BufTabLineModifiedHidden { fg = n3.fg, bg = background, gui = 'bold' },
+      --- {{{ DropBar
     -- DropBarCurrentContext	{ link = 'Visual' }
     -- DropBarFzfMatch	{ link = 'TelescopeMatching' }
     -- DropBarHover	{ link = 'Visual' }
@@ -975,6 +966,7 @@ local themeFunc = function(config)
     -- DropBarKindValue	undefined
     -- DropBarKindVariable	undefined
     -- DropBarKindWhileStatement	undefined
+      -- }}}
 	}
 		-- }}}
 	end)
