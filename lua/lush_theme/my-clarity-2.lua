@@ -1,57 +1,7 @@
 -- vim: set foldmethod=marker
--- {{{ Info Comment
--- Built with,
---
---        ,gggg,
---       d8" "8I                         ,dPYb,
---       88  ,dP                         IP'`Yb
---    8888888P"                          I8  8I
---       88                              I8  8'
---       88        gg      gg    ,g,     I8 dPgg,
---  ,aa,_88        I8      8I   ,8'8,    I8dP" "8I
--- dP" "88P        I8,    ,8I  ,8'  Yb   I8P    I8
--- Yb,_,d88b,,_   ,d8b,  ,d8b,,8'_   8) ,d8     I8,
---  "Y8P"  "Y888888P'"Y88P"`Y8P' "YY8P8P88P     `Y8
---
-
--- This is a starter colorscheme for use with Lush,
--- for usage guides, see :h lush or :LushRunTutorial
-
---
--- Note: Because this is lua file, vim will append your file to the runtime,
---       which means you can require(...) it in other lua code (this is useful),
---       but you should also take care not to conflict with other libraries.
---
---       (This is a lua quirk, as it has somewhat poor support for namespacing.)
---
---       Basically, name your file,
---
---       "super_theme/lua/lush_theme/super_theme_dark.lua",
---
---       not,
---
---       "super_theme/lua/dark.lua".
---
---       With that caveat out of the way...
---
-
--- Enable lush.ify on this file, run:
---
---  `:Lushify`
---
---  or
---
---  `:lua require('lush').ify()`
---  }}}
--- {{{ Imports
 local lush = require("lush")
 local utils = require("lush_theme.utils")
 local hsl = lush.hsluv
-
--- print(hsl(120, 100, 50).mix(hsl(0, 100, 50), 50))
-
--- }}}
--- {{{ Constants
 
 local dayOfTheYear = os.date("*t").yday
 
@@ -137,7 +87,7 @@ local themeFunc = function(config)
     C4 { fg = c4.fg, gui = c4.gui },
     C5 { fg = c5.fg, gui = c5.gui },
     C6 { fg = c6.fg, gui = c6.gui },
-    -- Interface
+    -- Interface (neutral colors)
     N1 { fg = n1.fg, gui = n1.gui },
     N2 { fg = n2.fg, gui = n2.gui },
     N3 { fg = n3.fg, gui = n3.gui },
@@ -371,6 +321,9 @@ local themeFunc = function(config)
 
 		---- Misc
     sym("@tskeywordcontrolflow") { fg = p1.fg, gui = p1.gui },
+    -- Defined by nvim_controlflow_queries
+    sym("@control_flow") { fg = p1.fg, gui = p1.gui },
+
 		sym("@comment") { fg = c1.fg, bg = c6.fg },
 		sym("@comment.documentation") { sym("@comment") },
 		-- sym("@error") { fg = error },
@@ -481,22 +434,22 @@ local themeFunc = function(config)
 		---- The help page :h lsp-semantic-highlight
 		---- A short guide: https://gist.github.com/swarn/fb37d9eefe1bc616c2a7e476c0bc0316
 		---- Token types and modifiers are described here: https://code.visualstudio.com/api/language-extensions/semantic-highlight-guide
-		sym("@lsp") { sym("@none") },
-		sym("@lsp.type.property") { fg = p5.fg},
-		sym("@lsp.type.namespace") { sym("@namespace") },
-		sym("@lsp.type.interface") { sym("@type") },
-		sym("@lsp.type.type") { sym("@type") },
-		sym("@lsp.mod.declaration.type.type") { sym("@type") },
-		sym("@lsp.type.parameter") { fg = p5.fg },
-		sym("@lsp.type.variable") { fg = p5.fg },
-		sym("@lsp.type.class") { fg = p5.fg },
-		sym("@lsp.mod.declaration") { fg = p5.fg },
-		sym("@lsp.mod.defaultLibrary") { sym("@none") },
-		sym("@lsp.typemod.method.defaultLibrary") { sym("@none") },
-		sym("@lsp.typemod.class.defaultLibrary") { sym("@none") },
+		-- sym("@lsp") { sym("@none") },
+		-- sym("@lsp.type.property") { fg = p5.fg},
+		-- sym("@lsp.type.namespace") { sym("@namespace") },
+		-- sym("@lsp.type.interface") { sym("@type") },
+		-- sym("@lsp.type.type") { sym("@type") },
+		-- sym("@lsp.mod.declaration.type.type") { sym("@type") },
+		-- sym("@lsp.type.parameter") { fg = p5.fg },
+		-- sym("@lsp.type.variable") { fg = p5.fg },
+		-- sym("@lsp.type.class") { fg = p5.fg },
+		-- sym("@lsp.mod.declaration") { fg = p5.fg },
+		-- sym("@lsp.mod.defaultLibrary") { sym("@none") },
+		-- sym("@lsp.typemod.method.defaultLibrary") { sym("@none") },
+		-- sym("@lsp.typemod.class.defaultLibrary") { sym("@none") },
 
-		sym("@lsp.type.function") { fg = p1.fg, gui = p1.gui },
-		sym("@lsp.type.method") { fg = p1.fg, gui = p1.gui },
+		-- sym("@lsp.type.function") { fg = p1.fg, gui = p1.gui },
+		-- sym("@lsp.type.method") { fg = p1.fg, gui = p1.gui },
 
 		--sym("@lsp.type.enum") { fg = blue_green },
 		--sym("@lsp.type.struct") { fg = blue_green },
@@ -968,7 +921,6 @@ local themeFunc = function(config)
     -- DropBarKindWhileStatement	undefined
       -- }}}
 	}
-		-- }}}
 	end)
 end
 

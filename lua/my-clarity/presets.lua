@@ -1,3 +1,8 @@
+---@class PresetListConfig
+---@field name string
+---@field colors MyClarityConfigColors
+
+---@type table<PresetName, PresetListConfig>
 local presets = {
 	default = {
 		name = "default",

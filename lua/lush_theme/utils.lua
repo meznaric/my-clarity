@@ -4,10 +4,6 @@ local hsl = lush.hsluv
 
 local M = {}
 
--- local function lerp(x, y, t)
--- 	return x + (y - x) * t
--- end
-
 local function mapToRange(value, fromMin, fromMax, toMin, toMax)
 	return toMin + (value - fromMin) * (toMax - toMin) / (fromMax - fromMin)
 end
@@ -16,15 +12,6 @@ local winterHue = 235
 local springHue = 120
 local summerHue = 60
 local autumnHue = 20
-
-local winterStart = 355
-local winterMid = 21
-local springStart = 76
-local midSpring = 105
-local summerStart = 172
-local midSummer = 198
-local autumnStart = 259
-local midAutumn = 285
 
 local function mix(c1, c2, t)
 	local color1 = hsl(c1, 50, 50)
@@ -38,7 +25,7 @@ local function mix(c1, c2, t)
 	-- Return the interpolated color as a new tuple
 
 	local hue = hslUtils.lch_to_hsluv({ l, c, h })[1]
-	vim.notify("l: " .. l .. " c: " .. c .. " h: " .. h .. " FINAL: " .. hue)
+	-- vim.notify("l: " .. l .. " c: " .. c .. " h: " .. h .. " FINAL: " .. hue)
 	return hue
 end
 
