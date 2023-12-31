@@ -129,8 +129,9 @@ for _ in pairs(presets) do
 end
 
 local current_day = os.date("*t").yday
+-- Moves 1 day forward
 M.next_day = function()
-	current_day = (current_day + 2) % 365
+	current_day = (current_day + 1) % 365
 	local colors = {
 		color_mode = "by_day",
 		day = current_day,
@@ -141,6 +142,7 @@ M.next_day = function()
 	M.change_config({ colors = colors })
 end
 
+-- Moves 30 days forward
 M.next_month = function()
 	current_day = (current_day + 30) % 365
 	local colors = {
@@ -153,6 +155,7 @@ M.next_month = function()
 	M.change_config({ colors = colors })
 end
 
+-- Moves to the next pre-defined preset
 M.next_preset = function()
 	preset_index = (preset_index + 1) % total_presets
 	local index = 0

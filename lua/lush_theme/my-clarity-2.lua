@@ -34,9 +34,9 @@ local themeFunc = function(config)
 		local background = hsl(currentHue, 80, 3)
 
 		local sym = injected_functions.sym
-		local p1 = { fg = hsl(currentHue, 99, 95), gui = "bold" }
-		local p2 = { fg = hsl(currentHue, 99, 75) }
-		local p3 = { fg = hsl(currentHue, 80, 60) }
+		local p1 = { fg = hsl(currentHue, 99, 99), gui = "bold" }
+		local p2 = { fg = hsl(currentHue, 99, 85) }
+		local p3 = { fg = hsl(currentHue, 80, 65) }
 		local p4 = { fg = hsl(currentHue, 75, 55) }
 		local p5 = { fg = hsl(currentHue, 70, 50) }
 		local p6 = { fg = hsl(currentHue, 65, 45) }
@@ -320,9 +320,8 @@ local themeFunc = function(config)
 		---- (2). To find all the capture names, see https://github.com/nvim-treesitter/nvim-treesitter/blob/master/CONTRIBUTING.md#highlights)
 
 		---- Misc
-    sym("@tskeywordcontrolflow") { fg = p1.fg, gui = p1.gui },
     -- Defined by nvim_controlflow_queries
-    sym("@control_flow") { fg = p1.fg, gui = p1.gui },
+    sym("@control_flow") { P1 },
 
 		sym("@comment") { fg = c1.fg, bg = c6.fg },
 		sym("@comment.documentation") { sym("@comment") },
@@ -351,8 +350,8 @@ local themeFunc = function(config)
 		sym("@float") { fg = p6.fg },
 
 		---- Function
-		-- sym("@function") { Function },
-		sym("@function.builtin") { fg = a2.fg },
+		sym("@function") { P6 },
+		sym("@function.builtin") { P4 },
 		sym("@function.call") { P1 },
 		--sym("@function.macro") { Function },
 		sym("@method") { P6 },
@@ -383,6 +382,7 @@ local themeFunc = function(config)
 		sym("@storageclass") { fg = p4.fg },
 		sym("@attribute") { fg = p4.fg },
 		sym("@field") { fg = p4.fg },
+		-- sym("@field.luadoc") { N3},
 		sym("@property") { fg = p4.fg },
 
 		---- Identifiers
@@ -927,7 +927,9 @@ end
 -- Flip this to true so you can use `:Lushify`
 local __DEV = false
 if __DEV then
-	return themeFunc({})
+	return themeFunc({
+		colors = { color_mode = "by_day", day = 0, first_offset = -150, second_offset = 40 },
+	})
 else
 	return themeFunc
 end
