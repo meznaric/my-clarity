@@ -25,12 +25,12 @@ local themeFunc = function(config)
 	local currentHue, accentHue, commentHue = get_colors(config.colors)
 
 	return lush(function(injected_functions)
-		local success = hsl(150, 99, 35)
+		local success = hsl(150, 99, 43)
 		local remove = hsl(0, 90, 25)
 		local error = hsl(360, 85, 60)
 		local errorFg = hsl(365, 99, 50)
 		local warn = hsl(50, 60, 49)
-		local warnFg = hsl(50, 99, 60)
+		local warnFg = hsl(40, 99, 70)
 		local background = hsl(currentHue, 80, 3)
 
 		local sym = injected_functions.sym
@@ -47,6 +47,8 @@ local themeFunc = function(config)
 		local a4 = { fg = hsl(accentHue, 40, 28) }
 		local a5 = { fg = hsl(accentHue, 60, 24) }
 		local a6 = { fg = hsl(accentHue, 80, 20) }
+		local a7 = { fg = hsl(accentHue, 80, 10) }
+		local a8 = { fg = hsl(accentHue, 60, 5) }
 
 		local n1 = { fg = hsl(currentHue, 15, 98), gui = "bold" }
 		local n2 = { fg = hsl(currentHue, 15, 80) }
@@ -80,6 +82,8 @@ local themeFunc = function(config)
     A4 { fg = a4.fg, gui = a4.gui },
     A5 { fg = a5.fg, gui = a5.gui },
     A6 { fg = a6.fg, gui = a6.gui },
+    A7 { fg = a7.fg, gui = a7.gui },
+    A8 { fg = a8.fg, gui = a8.gui },
     -- Comments
     C1 { fg = c1.fg, gui = c1.gui },
     C2 { fg = c2.fg, gui = c2.gui },
@@ -101,7 +105,7 @@ local themeFunc = function(config)
 		--
 		-- Preset
 		-- TabBorder { fg = n1.fg }, -- tab.border, border to separate tabs from each other
-		-- FloatBorder { fg = n1.fg },
+		-- FloatBorder { bg = n1.fg },
 		-- SelectionHighlightBackground { bg = a6.fg },
 		--LightBulb { fg = '#ffcc00' },
 		--CodeLens { fg = '#999999' },
@@ -117,7 +121,7 @@ local themeFunc = function(config)
 		--GutterGitDeleted { fg = '#f14c4c' },
 		--GutterGitModified { fg = '#1b81a8' },
 		--Breadcrumb { fg = '#a9a9a9', bg = norm_bg },
-		-- ScrollbarSlider { fg = p1.fg },
+		-- ScrollbarSlider { fg = '#ff0000' },
 		--PeekViewBorder { fg = '#3794ff' },
 		--PeekViewNormal { bg = '#001f33' },
 		--PeekViewTitle { fg = white }, -- peekViewTitleLabel.foreground
@@ -152,31 +156,34 @@ local themeFunc = function(config)
 		----
 		---- Editor
 		----
-		--CursorLine { bg = black3 },
-		--CursorColumn { bg = black3 },
-		--ColorColumn { bg = black2 }, -- #5a5a5a in VSCode (editorRuler.foreground) it's too bright
+		-- CursorLine { bg = '#ff0000' },
+		-- CursorColumn { bg = c4.fg },
 		--Conceal { fg = gray2 },
-		-- Cursor { fg = p4.fg, bg = p1.fg },
-		---- lCursor { },
-		---- CursorIM { },
+		ColorColumn { bg = hsl(currentHue, 100, 8)}, -- #5a5a5a in VSCode (editorRuler.foreground) it's too bright
+		Cursor { fg = c1.fg, bg = c1.fg },
+		lCursor { fg = c1.fg, bg = c1.fg },
+		-- iCursor { N1 },
+		-- iCursor { fg = hsl(10, 100, 50) },
+		-- CursorIM { N1 },
+		-- CursorLineNr { N1 },
+		-- TermCursor { N1 },
+		---- TermCursorNC { },
+		--CursorLineFold { CursorLineNr },
+		--ErrorMsg { fg = error_red },
 		--Directory { fg = dark_blue },
 		DiffAdd { bg = success, fg = n1.fg },
 		DiffDelete { bg = remove, fg = n1.fg },
 		--DiffChange { DiffLineChanged },
 		--DiffText { DiffTextChanged },
 		--EndOfBuffer { fg = norm_bg },
-		---- TermCursor { },
-		---- TermCursorNC { },
-		--ErrorMsg { fg = error_red },
-		--WinSeparator { fg = '#444444' }, -- editorGroup.border
+		WinSeparator { fg = p4.fg, gui = 'bold' }, -- editorGroup.border
+      -- editorGroup.border
 		--VirtSplit { WinSeparator }, -- deprecated and use WinSeparator instead
 		--LineNr { fg = gray2 },
-		--CursorLineNr { fg = '#c6c6c6' },
 		--Folded { bg = folded_blue },
-		--CursorLineFold { CursorLineNr },
-		--FoldColumn { LineNr }, -- #c5c5c5 in VSCode (editorGutter.foldingControlForeground) and it's too bright
+		-- FoldColumn { fg ="red" }, -- #c5c5c5 in VSCode (editorGutter.foldingControlForeground) and it's too bright
 		--SignColumn { bg = norm_bg },
-		IncSearch { bg = n5.fg },
+		IncSearch { bg = c1.fg, fg = c6.fg },
 		---- Substitute { },
 		--MatchParen { bg = gray, gui = 'bold, underline' },
 		--ModeMsg { fg = norm_fg },
@@ -187,10 +194,10 @@ local themeFunc = function(config)
 		Normal { fg = n3.fg, bg = background },
 		---- NormalNC { },
 		--Pmenu { fg = norm_fg, bg = black2 },
-		--PmenuSel { fg = white, bg = selection_blue },
+		PmenuSel { bg = a6.fg },
 		--PmenuSbar { bg = black2 },
 		--PmenuThumb { bg = '#474747' },
-		--NormalFloat { Pmenu },
+		NormalFloat { bg = n6.fg },
 		--Question { fg = dark_blue },
 		--QuickFixLine { QfSelection },
 		Search { IncSearch },
@@ -199,19 +206,26 @@ local themeFunc = function(config)
 		--SpellCap { gui = 'undercurl', sp = warn_yellow},
 		--SpellLocal { gui = 'undercurl', sp = info_blue },
 		--SpellRare  { gui = 'undercurl', sp = info_blue  },
-		--StatusLine { bg = black2 },
+		StatusLine { bg = n6.fg, fg = n3.fg }, 
 		--StatusLineNC { fg = gray, bg = black2 },
-		--TabLine { fg = '#8f8f8f', bg = black },
-		--TabLineFill { fg = 'NONE', bg = black2 },
-		--TabLineSel { fg = white, bg = norm_bg },
+		TabLine { bg = background },
+		TabLineSel { fg = n6.fg, bg = n1.fg },
+		TabLineFill { fg = 'NONE', bg = 'NONE' },
+    -- BufTabLineFill { bg = background },
+    -- BufTabLineCurrent { fg = n6.fg, bg = n1.fg},
+    -- BufTabLineModifiedCurrent { fg = n6.fg, bg = a1.fg, gui = 'bold' },
+    -- BufTabLineActive { fg = n5.fg,  bg = n3.fg },
+    -- BufTabLineModifiedActive { fg = n3.fg, bg = a5.fg, gui = 'bold' },
+    -- BufTabLineHidden { fg = n3.fg , bg = background },
+    -- BufTabLineModifiedHidden { fg = n3.fg, bg = background, gui = 'bold' },
 		--Title { fg = dark_blue, gui = 'bold' },
 		--Visual { bg = '#264F78' },
 		---- VisualNOS { },
 		--WarningMsg { fg = warn_yellow },
 		--Whitespace { fg = '#3e3e3d' },
 		--WildMenu { PmenuSel },
-		--Winbar { Breadcrumb },
-		--WinbarNC { Breadcrumb },
+		-- Winbar { bg = a3.fg },
+		-- WinbarNC { bg = a3.fg },
 
 		----
 		---- Syntax
@@ -307,7 +321,7 @@ local themeFunc = function(config)
 		--DiagnosticSignInfo { DiagnosticInfo },
 		--DiagnosticSignHint { DiagnosticHint },
 		--DiagnosticSignOk { DiagnosticOk },
-		--DiagnosticUnnecessary { UnnecessaryCode, gui = 'underdashed' },
+		DiagnosticUnnecessary { fg = n4.fg, gui = 'underdashed' },
 		--DiagnosticDeprecated { fg = gray3, gui = 'strikethrough' },
 
 		----
@@ -352,10 +366,10 @@ local themeFunc = function(config)
 		---- Function
 		sym("@function") { P6 },
 		sym("@function.builtin") { P4 },
-		sym("@function.call") { P1 },
+		sym("@function.method.call") { P1 },
 		--sym("@function.macro") { Function },
 		sym("@method") { P6 },
-		sym("@method.call") { P1 },
+		sym("@function.call") { P1 },
 		--sym("@constructor") { fg = blue_green },
 		sym("@parameter") { fg = p4.fg },
 
@@ -417,6 +431,7 @@ local themeFunc = function(config)
 
 		---- Tags
 		sym("@tag") { fg = p1.fg, gui = p1.gui },
+		sym("@tag.builtin") { fg = p3.fg, gui = p3.gui },
 		sym("@constructor") { fg = p1.fg, gui = p1.gui },
 		sym("@tag.attribute") { fg = p6.fg },
 		--sym("@tag.delimiter") { fg = gray3 },
@@ -498,6 +513,15 @@ local themeFunc = function(config)
 		--sym("@lsp.typemod.string.injected") { sym("@lsp.type.string") },
 		--sym("@lsp.typemod.variable.injected") { sym("@lsp.type.variable") },
 
+
+    ---
+    --- Scrollbar
+    ---
+    ScrollbarHandle { bg = n1.fg, fg = n1.fg },
+    ScrollbarHandleClarity { bg = a6.fg, fg = n1.fg },
+    ScrollbarCursor { bg = n1.fg, fg = n1.fg },
+
+
 		----
 		---- nvim-lspconfig
 		----
@@ -506,29 +530,30 @@ local themeFunc = function(config)
 		---- LspInfoFiletype { },
 		---- LspInfoTip { },
 		--LspInfoBorder { FloatBorder },
+    --loadfile
 
 		----
 		---- nvim-cmp
 		----
 		--CmpItemAbbrDeprecated { fg = gray3, bg = 'NONE', gui = 'strikethrough' },
-		--CmpItemAbbrMatch { MatchedCharacters, bg = 'NONE' },
-		--CmpItemAbbrMatchFuzzy { CmpItemAbbrMatch },
-		--CmpItemMenu { Description },
-		--CmpItemKindText { fg = '#cccccc', bg = 'NONE' },
-		--CmpItemKindMethod { fg = '#b180d7', bg = 'NONE' },
-		--CmpItemKindFunction { CmpItemKindMethod },
-		--CmpItemKindConstructor { CmpItemKindFunction },
-		--CmpItemKindField { fg = '#75beff', bg = 'NONE' },
-		--CmpItemKindVariable { CmpItemKindField },
-		--CmpItemKindClass { fg = '#ee9d28', bg = 'NONE' },
-		--CmpItemKindInterface { CmpItemKindField },
+		CmpItemAbbrMatch { fg = p2.fg, bg = 'NONE' },
+		-- CmpItemAbbrMatchFuzzy { CmpItemAbbrMatch },
+		CmpItemMenu { fg = n4.fg }, -- source
+		CmpItemKindText { bg = n5.fg, fg = n1.fg },
+		CmpItemKindMethod { bg = p2.fg, fg = n6.fg },
+		CmpItemKindFunction { bg = p2.fg, fg = n6.fg },
+		-- CmpItemKindConstructor { CmpItemKindFunction },
+		CmpItemKindField { bg = p3.fg, fg = n1.fg},
+		CmpItemKindVariable {  bg = p4.fg, fg = n1.fg},
+		CmpItemKindClass { bg = a2.fg, fg = n1.fg},
+		CmpItemKindInterface { bg = a2.fg, fg = n1.fg },
 		--CmpItemKindModule { CmpItemKindText },
-		--CmpItemKindProperty { CmpItemKindText },
+		CmpItemKindProperty { CmpItemKindVariable },
 		--CmpItemKindUnit { CmpItemKindText },
 		--CmpItemKindValue { CmpItemKindText },
-		--CmpItemKindEnum { CmpItemKindClass },
-		--CmpItemKindKeyword { CmpItemKindText },
-		--CmpItemKindSnippet { CmpItemKindText },
+		CmpItemKindEnum { bg = a2.fg, fg = n1.fg },
+		CmpItemKindKeyword { bg = p6.fg, fg = n1.fg },
+		CmpItemKindSnippet { bg = c6.fg, fg = n1.fg },
 		--CmpItemKindColor { CmpItemKindText },
 		--CmpItemKindFile { CmpItemKindText },
 		--CmpItemKindReference { CmpItemKindText },
@@ -538,7 +563,7 @@ local themeFunc = function(config)
 		--CmpItemKindStruct { CmpItemKindText },
 		--CmpItemKindEvent { CmpItemKindClass },
 		--CmpItemKindOperator { CmpItemKindText },
-		--CmpItemKindTypeParameter { CmpItemKindText },
+		CmpItemKindTypeParameter { fg = a1.fg },
 		---- Predefined for the winhighlight config of cmp float window
 		--SuggestWidgetBorder { FloatBorder },
 		--SuggestWidgetSelect { bg = selection_blue },
@@ -657,8 +682,11 @@ local themeFunc = function(config)
 		---- indent-blankline
 		----
 		IblIndent { fg = n5.fg },
-    IndentBlanklineIndent { fg = n5.fg },
+    IndentBlanklineIndent { fg = n5.fg, bg = c5.fg },
 		IblScope { fg = n5.fg },
+    Ibl1 { fg = n5.fg },
+    Ibl2 { fg = n3.fg },
+    Ibl3 { fg = n2.fg },
 
 		----
 		---- hlslens
@@ -741,7 +769,7 @@ local themeFunc = function(config)
 		----
 		---- nvim-scrollview
 		----
-		--ScrollView { ScrollbarSlider },
+		-- ScrollView { bg = "#ffffff" },
 		--ScrollViewRestricted { ScrollView },
 		--ScrollViewConflictsTop { DiffAdd },
 		--ScrollViewConflictsMiddle { DiffAdd },
@@ -847,13 +875,14 @@ local themeFunc = function(config)
     -- DropBarIconUIPickPivot	{ link = 'Error' }
     -- DropBarIconUISeparator	{ link = 'SpecialChar' }
     -- DropBarIconUISeparatorMenu	{ link = 'DropBarIconUISeparator' }
-    -- DropBarMenuCurrentContext	{ link = 'PmenuSel' }
-    -- DropBarMenuFloatBorder	{ link = 'FloatBorder' }
+    -- DropBarMenuCurrentContext	{A1}
+    -- DropBarMenuFloatBorder	{A1}
     -- DropBarMenuHoverEntry	{ link = 'Visual' }
     -- DropBarMenuHoverIcon	{ reverse = true }
     -- DropBarMenuHoverSymbol	{ bold = true }
-    -- DropBarMenuNormalFloat	{ link = 'NormalFloat' }
-    -- DropBarMenuSbar	{ link = 'PmenuSbar' }
+    -- DropBarMenuNormalFloat	{A1}
+    -- DropBarPreview { bg = a2.fg },
+    -- DropBarMenuSbar	{ p1 }
     -- DropBarMenuThumb	{ link = 'PmenuThumb' }
     -- DropBarPreview	{ link = 'Visual' }
     -- DropBarKindArray	undefined
@@ -928,7 +957,7 @@ end
 local __DEV = false
 if __DEV then
 	return themeFunc({
-		colors = { color_mode = "by_day", day = 0, first_offset = -150, second_offset = 40 },
+		colors = { color_mode = "by_day", day = 50, first_offset = 120, second_offset = -60 },
 	})
 else
 	return themeFunc

@@ -131,7 +131,7 @@ end
 local current_day = os.date("*t").yday
 -- Moves 1 day forward
 M.next_day = function()
-	current_day = (current_day + 1) % 365
+	current_day = (current_day + 3) % 365
 	local colors = {
 		color_mode = "by_day",
 		day = current_day,
