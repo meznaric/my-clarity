@@ -15,8 +15,8 @@ On top of that I wanted:
  - Always expected defaults (based of neovim 0.10 default colorscheme):
     - Red errors, orange warnings, ...
     - Added lines are green, removed lines are red, ...
- - 100s of variations to choose from. VIEW PRESETS HERE
- - ❄️🍃☀️🍂 - Changes every day a little bit to match the color of the season
+ - 100s of variations to choose from. VIEW PRESETS HERE (todo preset browser)
+ - ❄️🍃☀️🍂 - Changes every day a little bit to match the color of the season (Optional)
    - Maintains the color hirearchy so you don't get lost as the colors change over time
  - Easily get `tetriadic`/`complementary`/`analogous` color schemes
    - See [presets](/lua/my-clarity/presets.lua)
